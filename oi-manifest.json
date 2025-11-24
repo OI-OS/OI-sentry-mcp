@@ -1,0 +1,170 @@
+{
+  "server_name": "OI-sentry-mcp",
+  "version": "1.0.0",
+  "intents": [
+    {
+      "keyword": "sentry whoami",
+      "tool_name": "whoami",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry who am i",
+      "tool_name": "whoami",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry find organizations",
+      "tool_name": "find_organizations",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry list organizations",
+      "tool_name": "find_organizations",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry find projects",
+      "tool_name": "find_projects",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry list projects",
+      "tool_name": "find_projects",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry find teams",
+      "tool_name": "find_teams",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry list teams",
+      "tool_name": "find_teams",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry find dsns",
+      "tool_name": "find_dsns",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry get dsn",
+      "tool_name": "find_dsns",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry get issue",
+      "tool_name": "get_issue_details",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry issue details",
+      "tool_name": "get_issue_details",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry search issues",
+      "tool_name": "search_issues",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry search events",
+      "tool_name": "search_events",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry search docs",
+      "tool_name": "search_docs",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry get doc",
+      "tool_name": "get_doc",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry analyze issue",
+      "tool_name": "analyze_issue_with_seer",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry create project",
+      "tool_name": "create_project",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry create team",
+      "tool_name": "create_team",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry update issue",
+      "tool_name": "update_issue",
+      "priority": 10
+    },
+    {
+      "keyword": "sentry resolve issue",
+      "tool_name": "update_issue",
+      "priority": 10
+    },
+  ],
+  "parameter_extractors": {
+    "find_organizations": {
+      "OI-sentry-mcp::find_organizations.query": "regex:(?:query|search|find|for)[\\s:]+([^\\s]+(?:\\s+[^\\s]+)*)"
+    },
+    "find_projects": {
+      "OI-sentry-mcp::find_projects.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::find_projects.query": "regex:(?:query|search|find|for)[\\s:]+([^\\s]+(?:\\s+[^\\s]+)*)"
+    },
+    "find_teams": {
+      "OI-sentry-mcp::find_teams.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::find_teams.query": "regex:(?:query|search|find|for)[\\s:]+([^\\s]+(?:\\s+[^\\s]+)*)"
+    },
+    "find_dsns": {
+      "OI-sentry-mcp::find_dsns.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::find_dsns.projectSlug": "regex:(?:project|proj)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)"
+    },
+    "get_issue_details": {
+      "OI-sentry-mcp::get_issue_details.issueUrl": "regex:https?://[^\\s]+sentry[^\\s]*issues/[^\\s]+",
+      "OI-sentry-mcp::get_issue_details.issueId": "regex:\\b([A-Z]+-[A-Z0-9]+)\\b",
+      "OI-sentry-mcp::get_issue_details.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)"
+    },
+    "search_issues": {
+      "OI-sentry-mcp::search_issues.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::search_issues.naturalLanguageQuery": "remove:sentry,search,issues,find,list,show,get"
+    },
+    "search_events": {
+      "OI-sentry-mcp::search_events.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::search_events.naturalLanguageQuery": "remove:sentry,search,events,find,list,show,get"
+    },
+    "search_docs": {
+      "OI-sentry-mcp::search_docs.query": "remove:sentry,search,docs,documentation,find,show,get"
+    },
+    "get_doc": {
+      "OI-sentry-mcp::get_doc.path": "regex:(?:path|doc|documentation)[\\s:]+([^\\s]+)"
+    },
+    "analyze_issue_with_seer": {
+      "OI-sentry-mcp::analyze_issue_with_seer.issueUrl": "regex:https?://[^\\s]+sentry[^\\s]*issues/[^\\s]+",
+      "OI-sentry-mcp::analyze_issue_with_seer.issueId": "regex:\\b([A-Z]+-[A-Z0-9]+)\\b",
+      "OI-sentry-mcp::analyze_issue_with_seer.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)"
+    },
+    "create_project": {
+      "OI-sentry-mcp::create_project.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::create_project.teamSlug": "regex:(?:team)[\\s:]+([^\\s/]+)",
+      "OI-sentry-mcp::create_project.name": "regex:(?:name|project)[\\s:]+([^\\s]+(?:\\s+[^\\s]+)*)",
+      "OI-sentry-mcp::create_project.platform": "regex:(?:platform|type)[\\s:]+([^\\s]+)"
+    },
+    "create_team": {
+      "OI-sentry-mcp::create_team.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::create_team.name": "regex:(?:name|team)[\\s:]+([^\\s]+(?:\\s+[^\\s]+)*)"
+    },
+    "update_issue": {
+      "OI-sentry-mcp::update_issue.issueUrl": "regex:https?://[^\\s]+sentry[^\\s]*issues/[^\\s]+",
+      "OI-sentry-mcp::update_issue.issueId": "regex:\\b([A-Z]+-[A-Z0-9]+)\\b",
+      "OI-sentry-mcp::update_issue.organizationSlug": "regex:(?:org|organization)[\\s:]+([^\\s/]+)|regex:([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)",
+      "OI-sentry-mcp::update_issue.status": "regex:(?:status|mark|set)[\\s:]+(resolved|unresolved|ignored)"
+    },
+  },
+  "reminder_message": "Sentry MCP server for error tracking and monitoring. Use find_organizations first to get organization slugs, then use other tools. Requires SENTRY_ACCESS_TOKEN environment variable for authentication."
+}
+
